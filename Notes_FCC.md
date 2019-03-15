@@ -165,3 +165,9 @@ Content-Type: application/x-www-form-urlencoded
 Content-Length: 20
 name=John+Doe&age=25
 ```
+### Get Data from POST Requests
+```js
+route: POST '/library'
+urlencoded_body: userId=546&bookId=6754 
+req.body: {userId: '546', bookId: '6754'}
+```
