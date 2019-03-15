@@ -111,3 +111,57 @@ app.use(express.static(__dirname + "/public"))
 * This file is secret, no one but you can access it, and it can be used to store data that you want to keep private or hidden.
 * You can access env var using `process.env.VAR_NAME`.
 * The `process.env` object is a global Node object, and variables are passed as strings.
+### Implement a Root-Level Request Logger Middleware
+* Middleware takes 3 args: the request object, the response object, and the next function in the application’s request-response cycle.
+* If MWare don't send a response when they are done, they then start the execution of the next function in the stack. This is triggered calling the 3rd argument `next()`.
+```js
+function(req, res, next) {
+ console.log("I'm a middleware...");
+ next();
+}
+```
+* MWare specific to POST `app.post(<mware-function>)`.
+### Chain Middleware to Create a Time Server
+```js
+app.get('/user', function(req, res, next) {
+req.user = getTheUserSync(); // Hypothetical synchronous operation
+next();
+}, function(req, res) {
+res.send(req.user);
+})
+```
+* This approach is useful to split the server operations into smaller units.
+* At each point of the middleware stack you can block the execution of the current chain and pass control to functions specifically designed to handle errors. 
+* Or you can pass control to the next matching route, to handle special cases.
+### Get Route Parameter Input from the Client
+* Route parameters are named segments of the URL, delimited by slashes (/). Each segment captures the value of the part of the URL which matches its position. 
+* The captured values can be found in the `req.params` object.
+```js
+route_path: '/user/:userId/book/:bookId'
+actual_request_URL: '/user/546/book/6754' 
+req.params: {userId: '546', bookId: '6754'}
+```
+### Get Query Parameter Input from the Client
+* Another common way to get input from the client is by encoding the data after the route path, using a query string. 
+* The query string is delimited by a question mark (?), and includes field=value couples. Each couple is separated by an ampersand (&). 
+* Express can parse the data from the query string, and populate the object `req.query`.
+```js
+route_path: '/library'
+actual_request_URL: '/library?userId=546&bookId=6754' 
+req.query: {userId: '546', bookId: '6754'}
+```
+* Chaining can be done in the following way:
+```js
+app.route(path).get(handler).post(handler)
+```
+
+### Use body-parser to Parse POST Requests
+* In POST method the data doesn’t appear in the URL, it is hidden in the request body. This is a part of the HTML request, also called payload.
+```js
+POST /path/subpath HTTP/1.0
+From: john@example.com
+User-Agent: someBrowser/1.0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 20
+name=John+Doe&age=25
+```
