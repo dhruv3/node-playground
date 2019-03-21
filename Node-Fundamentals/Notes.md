@@ -22,3 +22,20 @@ modules.exports = function(){}
 http.createServer(requestListener);
 ```
 * requestListener: Specifies a function to be executed every time the server gets a request. This function handles request from the user, as well as response back to the user.
+
+* `connect`: Connect is an extensible HTTP server framework for node using "plugins" known as middleware. Connect is a simple framework to glue together various "middleware" to handle requests. 
+* `body-parser`: Node.js body parsing middleware.
+* `request`: Request is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.
+* Sending Responses: Get url from request as `req.url` and send responses using `res.end`.
+* Creating a GET request you use request module.
+```js
+request('http://localhost:3000/hello', function(err, response, body){
+    //add content
+}).pipe(fs.createWriteStream("./DemoData/pipeFile.txt"))
+```
+* `pipe` allows you to write content received as response from server.
+* Another way to call GET request:
+```js
+request(options, callback);
+```
+
