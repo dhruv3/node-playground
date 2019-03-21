@@ -27,7 +27,7 @@ http.createServer(requestListener);
 * `body-parser`: Node.js body parsing middleware.
 * `request`: Request is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.
 * Sending Responses: Get url from request as `req.url` and send responses using `res.end`.
-* Creating a GET request you use request module.
+* **Creating a GET request from client** you use request module.
 ```js
 request('http://localhost:3000/hello', function(err, response, body){
     //add content
@@ -38,4 +38,22 @@ request('http://localhost:3000/hello', function(err, response, body){
 ```js
 request(options, callback);
 ```
+* **Creating a POST request from client** do as follows:
+```js
+var data = {
+    userFirstName: "John",
+    userLastName: "Cena"
+}
 
+//Syntax 1:
+//request.post('http://localhost:3000/').form(data);
+//Syntax 2:
+//request.post('http://localhost:3000/',{form: data});
+//Syntax 3:
+request.post('http://localhost:3000/',{form: data}, callback);
+```
+
+* POST request to upload a file:
+```js
+
+```
