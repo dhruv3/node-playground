@@ -1,0 +1,14 @@
+{
+  "name": "sendingresponse",
+  "version": "1.0.0",
+  "description": "Send Response based on URL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dhruv",
+  "license": "ISC",
+  "dependencies": {
+    "connect": "*"
+  }
+}
