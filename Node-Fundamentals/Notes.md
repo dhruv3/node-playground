@@ -17,3 +17,8 @@ modules.exports = function(){}
 * Core module in Node are `os`, `http`.
 * Node caching can cause issue. Module gets cached when its imported. Reimporting the module again in the same file will not fetch the latest changes.
 * `npm prune` removes dependencies not present in package.json.
+## Basic Web Server
+```js
+http.createServer(requestListener);
+```
+* requestListener: Specifies a function to be executed every time the server gets a request. This function handles request from the user, as well as response back to the user.
