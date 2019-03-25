@@ -52,8 +52,22 @@ var data = {
 //Syntax 3:
 request.post('http://localhost:3000/',{form: data}, callback);
 ```
-
-* POST request to upload a file:
+* **Managing Events**: The core `http` module supports ability to handle events like `request`(which is emitted wheenver any request is received by server) and `upgrade`(when= we want to change the communication from http to websocket. WS is more secure and efficient way to communicate). To launch the `upgrade` event you need to contact the server using websocket way of communication.
+* **Serve Static Files**: Use `serve-static` module and you can get static file if you go to urls like `localhost:3000/eggs.jpg`. Write code as follows:
 ```js
+var app = connect().use(serveStatic('myPublicFolder'))
+```
+* **URL module**: This is a core node module which can be used to parse urls and also create a http url. Code:
+```js
+var parsedUrlObject = url.parse(someUrl, true);
 
+var urlString = url.format(parsedUrlObject);
+```
+* **queryString module**: It takes an object and generates a string which can be appended at the end of url. You can then make a request to that url. Example:
+```js
+var queryDataObject = {
+    "resourceId": 1,
+    "uName": "John"
+}
+var stringFromObject = queryString.stringify(queryDataObject)
 ```
