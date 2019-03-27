@@ -1,0 +1,20 @@
+{
+  "name": "requestheaderparsermicroservice",
+  "version": "1.0.0",
+  "description": "I can get the IP address, preferred languages (from header Accept-Language) and system infos (from header User-Agent) for my device.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "ip",
+    "request"
+  ],
+  "author": "Dhruv",
+  "license": "MIT",
+  "dependencies": {
+    "express": "*"
+  }
+}
