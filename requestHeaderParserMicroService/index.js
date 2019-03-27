@@ -7,7 +7,15 @@ app.get('/', function(req, res){
 })
 
 app.get('/api/whoami', function(req, res){
-    res.end("hmm");
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const sysInfo = req.get('User-Agent');
+    const preferedLan = req.headers["accept-language"];
+    const retObj ={
+        "ipaddress": ip,
+        "language": preferedLan,
+        "software": sysInfo
+    }
+    res.end(JSON.stringify(retObj));
 })
 
 app.listen(3000);
