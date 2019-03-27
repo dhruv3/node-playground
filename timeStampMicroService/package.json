@@ -1,0 +1,19 @@
+{
+  "name": "timestampmicroservice",
+  "version": "1.0.0",
+  "description": "Time-Stamp problem handled",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "timeStamp",
+    "node",
+    "express"
+  ],
+  "author": "Dhruv",
+  "license": "ISC",
+  "dependencies": {
+    "express": "*"
+  }
+}
