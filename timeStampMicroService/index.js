@@ -8,25 +8,26 @@ app.get('/', function(req, res){
 
 app.get('/api/timestamp/:date_string?', function(req, res){
     const date_string = req.params.date_string;
-    let obj = new Date(parseInt(date_string));
-    //check required to handle "2015-10-03" format dates
-    if(date_string.indexOf("-") != -1){
-        obj = new Date(date_string);
+    let date_Obj = {};
+    // res.end(date_string)
+    if(date_string == undefined){
+        date_Obj = new Date();
     }
-    const retObj = {
-        "unix": obj.getTime(),
-        "utc": obj.toUTCString()
+    //check required to handle "2015-10-03" format dates
+    else if(date_string.indexOf("-") != -1){
+        date_Obj = new Date(date_string);
+    }
+    else{
+        date_Obj = new Date(parseInt(date_string));
+    }
+    let retObj = {
+        "unix": date_Obj.getTime(),
+        "utc": date_Obj.toUTCString()
+    }
+    if(retObj.utc == "Invalid Date"){
+        retObj = {"error" : "Invalid Date" };
     }
     res.end(JSON.stringify(retObj));
-    // res.end(JSON.stringify(req.params) + "\n" + JSON.stringify(req.query) + "\n" + JSON.stringify(req.route)) 
 })
-// app.use(function(req, res){
-    
-//     if(req.method.toLowerCase() == "get"){
-        
-//         // var absolutePath = __dirname + "/success.html"
-//         // res.sendFile(absolutePath)
-//     }
-//     //res.end("Form data received");
-// })
+
 app.listen(3000);
