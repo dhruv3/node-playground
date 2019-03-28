@@ -8,3 +8,4 @@
 * Node binding is used to facilitate communications with external systems. For example, if we want to communicate with HTTP servers, we can use HTTP binding. 
 ## Node Execution Model
 * Based on JS event model. It uses JS callback mechanism.
+<img width="1042" alt="Screen Shot 2019-03-28 at 1 48 23 PM" src="https://user-images.githubusercontent.com/13077629/55184540-68e41880-5160-11e9-971f-b18efae07f38.png">
