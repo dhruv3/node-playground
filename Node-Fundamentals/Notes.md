@@ -71,3 +71,17 @@ var queryDataObject = {
 }
 var stringFromObject = queryString.stringify(queryDataObject)
 ```
+## Connecting to MongoDB
+* Start `mongodb` server. By default it listens on port 27017.
+* Next run `npm install mongodb`. This is the driver which helps us communicate between Mongo and Node.
+```js
+const mongoCient1 = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/mydatabase";
+
+mongoCient1.connect(url, function(err, db){
+    if(err)
+        throw err;
+    console.log("database created");
+    db.close();
+});
+```
