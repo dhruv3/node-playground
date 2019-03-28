@@ -9,3 +9,27 @@
 ## Node Execution Model
 * Based on JS event model. It uses JS callback mechanism.
 <img width="1042" alt="Screen Shot 2019-03-28 at 1 48 23 PM" src="https://user-images.githubusercontent.com/13077629/55184540-68e41880-5160-11e9-971f-b18efae07f38.png">
+
+# Managing Advanced Application Elements Using Node.js
+## Buffering in Node-based Applications
+* Buffer Class exist in Node designed to handle raw binary data.
+* Each buffer correspond to certain raw memory allocated outside V8.
+Code Sample 1:
+```js
+var dbuffer1 = new Buffer(24);
+var dbuffer1 = new Buffer("8", "utf-8");
+dbuffer1.write("Happy Birthday", "utf-8");
+dbuffer2.copy(dbuffer1, 16);
+```
+Code Sample 2:
+```js
+const arr = new Array(2);
+arr[0] = 10
+arr[1] = 20
+//copy array content
+const dbuffer1 = Buffer.from(arr);
+//shares mem witharr
+const dbuffer2 = Buffer.from(arr.buffer);
+```
+## Timers in Node.js
+`setImmediate() vs nextTick() vs setTimeout(fn,0)`
