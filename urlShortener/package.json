@@ -14,8 +14,8 @@
   "author": "Dhruv",
   "license": "MIT",
   "dependencies": {
-    "mongodb": "*",
-    "connect": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "express": "*",
+    "mongodb": "*"
   }
 }
