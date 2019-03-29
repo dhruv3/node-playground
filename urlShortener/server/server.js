@@ -8,6 +8,24 @@ var path = require('path');
 
 var dns = require('dns');
 
+const mongoCient1 = require('mongodb').MongoClient;
+const url = "mongodb+srv://admin:admin@fcc-cluster-kuacf.mongodb.net/NewDBFCC?retryWrites=true";
+let collection = null;
+mongoCient1.connect(url, function(err, client){
+    if(err)
+        throw err;
+    const db = client.db('NewDBFCC');
+    collection = db.collection('NewCollectionFCC');
+});
+var counter = 0;
+var addRecordToCollection = function(url){
+    collection.insertOne({url: url, shortURL: counter}, (err, result) => {
+        if(err != undefined)
+            throw err;
+        counter++;
+    })
+}
+
 var app = express()
         .use(bodyParser.urlencoded({
             extended: true
@@ -15,23 +33,22 @@ var app = express()
         //handles the http req that come in
         .use(function(req, res){
             const url = req.url;
-            let targetURL = req.body.url;
-            const doubleSlashPos = targetURL.indexOf("//");
-            if(doubleSlashPos != -1)
-                targetURL = targetURL.substr(doubleSlashPos + 2);
-            
             if(url == '/'){
                 //https://stackoverflow.com/questions/14594121/express-res-sendfile-throwing-forbidden-error
                 res.sendFile(path.resolve(__dirname + "/../client/index.html"));
             }
             else if(url == '/api/shorturl/new'){
+                let targetURL = req.body.url;
+                const doubleSlashPos = targetURL.indexOf("//");
+                if(doubleSlashPos != -1)
+                    targetURL = targetURL.substr(doubleSlashPos + 2);
                 //check if legit
                 dns.lookup(targetURL, function(err, address, family){
                     if(err != undefined){
                         console.log(err);
                         res.end("Invalid URL");
                     }
-                    console.log(address + "\t" + family);
+                    addRecordToCollection(req.body.url);
                 })
             }
             else{
