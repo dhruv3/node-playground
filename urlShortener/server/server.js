@@ -16,14 +16,20 @@ mongoCient1.connect(url, function(err, client){
         throw err;
     const db = client.db('NewDBFCC');
     collection = db.collection('NewCollectionFCC');
+    collection.remove({});
 });
 var counter = 0;
 var addRecordToCollection = function(url){
-    collection.insertOne({url: url, shortURL: counter}, (err, result) => {
-        if(err != undefined)
-            throw err;
-        counter++;
-    })
+    collection.find({url: url}).toArray(function(err, result) {
+        if (err) throw err;
+        if(result.length == 0){
+            collection.insert({url: url, shortURL: counter});
+            counter++;
+        }
+        else{
+            //notify that already present
+        }
+    });
 }
 
 var app = express()
