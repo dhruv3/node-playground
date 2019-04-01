@@ -19,15 +19,29 @@ mongoCient1.connect(url, function(err, client){
     collection.remove({});
 });
 var counter = 0;
-var addRecordToCollection = function(url){
+var addRecordToCollection = function(url, res){
     collection.find({url: url}).toArray(function(err, result) {
         if (err) throw err;
         if(result.length == 0){
             collection.insert({url: url, shortURL: counter});
             counter++;
+            const newURL = "Shortcut URL is at " + (counter-1);
+            res.json({alert: newURL});
         }
         else{
-            //notify that already present
+            res.json({alert: "It already exists"});
+        }
+    });
+}
+
+var getAndRedirectToShortURL = function(shortURL, res){
+    collection.find({shortURL: shortURL}).toArray(function(err, result) {
+        if (err) throw err;
+        if(result.length == 0){
+            res.json({alert: "No such shortURL exists"});
+        }
+        else{
+            res.redirect(result[0].url);
         }
     });
 }
@@ -39,6 +53,7 @@ var app = express()
         //handles the http req that come in
         .use(function(req, res){
             const url = req.url;
+            console.log(url);
             if(url == '/'){
                 //https://stackoverflow.com/questions/14594121/express-res-sendfile-throwing-forbidden-error
                 res.render(path.resolve(__dirname + "/../client/index.ejs"));
@@ -54,8 +69,12 @@ var app = express()
                         console.log(err);
                         res.json({alert: "Invalid URL"});
                     }
-                    addRecordToCollection(req.body.url);
+                    addRecordToCollection(req.body.url, res);
                 })
+            }
+            else if(url.indexOf("/api/shorturl/") != -1){
+                const shortURL = url.substr("/api/shorturl/".length);
+                getAndRedirectToShortURL(parseInt(shortURL), res);
             }
             else{
                 var parsedInfo = {};
