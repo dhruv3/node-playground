@@ -41,7 +41,7 @@ var app = express()
             const url = req.url;
             if(url == '/'){
                 //https://stackoverflow.com/questions/14594121/express-res-sendfile-throwing-forbidden-error
-                res.sendFile(path.resolve(__dirname + "/../client/index.html"));
+                res.render(path.resolve(__dirname + "/../client/index.ejs"));
             }
             else if(url == '/api/shorturl/new'){
                 let targetURL = req.body.url;
@@ -52,7 +52,7 @@ var app = express()
                 dns.lookup(targetURL, function(err, address, family){
                     if(err != undefined){
                         console.log(err);
-                        res.end("Invalid URL");
+                        res.json({alert: "Invalid URL"});
                     }
                     addRecordToCollection(req.body.url);
                 })
@@ -64,6 +64,7 @@ var app = express()
                 res.end("User info parsed from form: " + parsedInfo.url);
             }
         })
+app.set('view engine', 'ejs');
 
 http.createServer(app).listen(3000)
 

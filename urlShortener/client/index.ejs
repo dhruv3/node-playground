@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Form Page</title>
+</head>
+
+    <body>
+        <h2>Enter URL you need to shorten:</h2>
+        <form action="http://localhost:3000/api/shorturl/new" method="POST">
+            URL: <input type="text" name="url"/><br/>
+            <input type="submit" name="submit"/>
+        </form>
+        <%=typeof alert!='undefined'? alert : ""%>
+    </body>
+</html>
