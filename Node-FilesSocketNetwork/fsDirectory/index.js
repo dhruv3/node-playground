@@ -26,3 +26,52 @@ fs.readdir('DirectoryA', function(err, files){
         })
     }
 })
+
+console.log("Removing Directories");
+
+fs.mkdir("DirectoryA/DirectoryNew", function(err){
+    if(err)
+        console.log(err);
+    else
+        console.log("Directory Created");
+})
+
+fs.rmdir("DirectoryA/DirectoryNew", function(err){
+    if(err)
+        console.log(err);
+    else
+        console.log("Directory Removed");
+})
+
+console.log("Reading Files");
+
+fs.readFile("DirectoryA/fileA.txt", "utf8", function(err, data){
+    if(err){
+        console.log(err);
+    }
+    else{
+        console.log(data);
+    }
+})
+
+console.log("Writing Files");
+
+fs.readFile("DirectoryA/fileA.txt", "utf8", function(err, data){
+    if(err){
+        console.log(err);
+    }
+    else{
+        console.log(data);
+    }
+})
+
+console.log("Watching for Directory Changes")
+
+fs.watch("DirectoryA", {persistent: true}, function(event, fileName){
+    if(event == "rename"){
+        console.log("rename done on " + fileName);
+    }
+    else if(event == "change"){
+        console.log("change done on " + fileName);
+    }
+})
