@@ -12,10 +12,20 @@
         <div class="content">
             <div class="postContainer">
                 <div class="createUserContainer">
-
+                    <h3>Create a New User</h3>
+                    <p><code>POST /api/exercise/new-user</code></p>
+                    <form action="http://localhost:3000/api/exercise/new-user" method="POST">
+                        <input type="text" name="newUser"/>
+                        <input type="submit" name="submit"/>
+                    </form>
                 </div>
                 <div class="addExerciseContainer">
-
+                    <h3>Add Exercises</h3>
+                    <p><code>POST /api/exercise/add</code></p>
+                    <form action="http://localhost:3000/api/exercise/add" method="POST">
+                        <input type="text" name="addExercise"/>
+                        <input type="submit" name="submit"/>
+                    </form>
                 </div>
             </div>  
         </div>
