@@ -15,7 +15,7 @@
                     <h3>Create a New User</h3>
                     <p><code>POST /api/exercise/new-user</code></p>
                     <form action="http://localhost:3000/api/exercise/new-user" method="POST">
-                        <input type="text" name="newUser"/>
+                        <input type="text" name="newUser" placeholder="username"/>
                         <input type="submit" name="submit"/>
                     </form>
                 </div>
@@ -23,7 +23,10 @@
                     <h3>Add Exercises</h3>
                     <p><code>POST /api/exercise/add</code></p>
                     <form action="http://localhost:3000/api/exercise/add" method="POST">
-                        <input type="text" name="addExercise"/>
+                        <input type="text" name="userId" placeholder="userId*"/>
+                        <input type="text" name="desc" placeholder="description*"/>
+                        <input type="text" name="duration" placeholder="duration* (mins.)"/>
+                        <input type="text" name="date" placeholder="date (yyyy-mm-dd)"/>
                         <input type="submit" name="submit"/>
                     </form>
                 </div>
