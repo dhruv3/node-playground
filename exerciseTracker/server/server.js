@@ -53,7 +53,7 @@ app.post('/api/exercise/new-user', function(req,res){
 
 app.post('/api/exercise/add', function(req, res){
     const exerciseObj = {
-        "userId": req.body.userId,
+        "userID": req.body.userID,
         "desc": req.body.desc,
         "duration": req.body.duration,
         "date": req.body.date
@@ -61,7 +61,7 @@ app.post('/api/exercise/add', function(req, res){
     //https://stackoverflow.com/questions/31088663/node-js-mongodb-db-collection-find-not-working-while-collection-insert-works
     //if userID exists
     userCollection.findOne(
-        {userID: exerciseObj["userId"]}
+        {userID: exerciseObj["userID"]}
         ).then(function(data){
             //if userID doesn't exist
             if(data == null){
@@ -87,6 +87,56 @@ app.post('/api/exercise/add', function(req, res){
         
 })
 
+function isValidDate(dateString) {
+    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    if(!dateString.match(regEx)) return false;  // Invalid format
+    var d = new Date(dateString);
+    if(Number.isNaN(d.getTime())) return false; // Invalid date
+    return d.toISOString().slice(0,10) === dateString;
+}
+
+app.get('/api/exercise/log/:userID', function(req, res){
+    const user = req.params.userID;
+    const fromDate = req.query.from;
+    const toDate = req.query.to;
+    const limit = req.query.limit; 
+    userCollection.findOne(
+        {userID: user}
+        ).then(function(data){
+            //if userID doesn't exist
+            if(data == null){
+                res.end("User does not exist.")
+            }
+            else if(Object.keys(req.query).length === 0){
+                //print everything
+            }
+            else{
+                console.log(req.query)
+                //validate date
+                if(isValidDate(fromDate) == false){
+                    res.end("Incorrect 'from' date");
+                }
+                if(isValidDate(toDate) == false){
+                    res.end("Incorrect 'to' date");
+                }
+                if(new Date(fromDate) > new Date(toDate)){
+                    res.end("'to' date should be higher than 'from' date")
+                }
+                if(typeof limit != "number" || limit <= 0){
+                    res.end("Incorrect value of limit parameter");
+                }
+                userRecordCollection.find({ 
+                    "userID": user, 
+                    "date" : { 
+                      $lt: toDate, 
+                      $gte: fromDate
+                    }   
+                }).then(function(res){
+                    console.log(res);
+                })
+            }
+        })
+})
 app.set('view engine', 'ejs');
 app.use(express.static(path.resolve(__dirname + "/../client/")));
 
