@@ -15,9 +15,9 @@ mongoCient.connect(url, function(err, client){
         throw err;
     const db = client.db('NewDBFCC');
     userCollection = db.collection('userExTrackerCollection');
-    userCollection.remove({});
+    //userCollection.remove({});
     userRecordCollection = db.collection('userRecordExTrackerCollection');
-    userRecordCollection.remove({});
+    //userRecordCollection.remove({});
 });
 
 const app = express()
@@ -30,10 +30,14 @@ app.get('/', function(req, res){
     res.render(path.resolve(__dirname + "/../client/homePage.ejs"));
 })
 
+//https://ciphertrick.com/2016/06/12/avoiding-callback-hell-node-js/
 app.post('/api/exercise/new-user', function(req,res){
     const newUserID = req.body.newUser;
+    //need to use $set in order insert
+    //https://stackoverflow.com/questions/13814539/mongodb-update-with-upserttrue-does-not-act-as-in-insert
     userCollection.update(
         { userID: newUserID },
+        {"$set": {"userID": newUserID}},
         { upsert: true }
     ).then(function(data){
         //update success message
@@ -48,7 +52,29 @@ app.post('/api/exercise/new-user', function(req,res){
 })
 
 app.post('/api/exercise/add', function(req, res){
-
+    const exerciseObj = {
+        "userId": req.body.userId,
+        "desc": req.body.desc,
+        "duration": req.body.duration,
+        "date": req.body.date
+    }
+    //https://stackoverflow.com/questions/31088663/node-js-mongodb-db-collection-find-not-working-while-collection-insert-works
+    //if userID exists
+    userCollection.findOne(
+        {userID: exerciseObj["userId"]}
+        ).then(function(data){
+            //if userID doesn't exist
+            if(data == null){
+                res.end("User does not exist.")
+            }
+            //validate date
+            else{
+                //if date is valid
+                //else send error
+                res.end("It exists");
+            }
+        })
+        
 })
 
 app.set('view engine', 'ejs');
