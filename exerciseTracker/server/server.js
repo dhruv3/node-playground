@@ -15,9 +15,9 @@ mongoCient.connect(url, function(err, client){
         throw err;
     const db = client.db('NewDBFCC');
     userCollection = db.collection('userExTrackerCollection');
-    //userCollection.remove({});
+    userCollection.remove({});
     userRecordCollection = db.collection('userRecordExTrackerCollection');
-    //userRecordCollection.remove({});
+    userRecordCollection.remove({});
 });
 
 const app = express()
@@ -69,9 +69,19 @@ app.post('/api/exercise/add', function(req, res){
             }
             //validate date
             else{
-                //if date is valid
-                //else send error
-                res.end("It exists");
+                //if date is older than current date. send error.
+                const currDate =  new Date();
+                const inpDate = new Date(exerciseObj["date"]);
+                if(inpDate < currDate){
+                    res.end("Incorrect date. Please select todays date or future date.");
+                }
+                //insert into collection
+                else{
+                    userRecordCollection.insertOne(exerciseObj)
+                        .then(function(data){
+                            res.json(exerciseObj);
+                        })
+                }
             }
         })
         
