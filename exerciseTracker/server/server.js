@@ -59,6 +59,7 @@ app.post('/api/exercise/add', function(req, res){
         "date": req.body.date
     }
     //https://stackoverflow.com/questions/31088663/node-js-mongodb-db-collection-find-not-working-while-collection-insert-works
+    //https://stackoverflow.com/questions/27823478/findone-works-but-not-get-all-find
     //if userID exists
     userCollection.findOne(
         {userID: exerciseObj["userID"]}
@@ -109,9 +110,16 @@ app.get('/api/exercise/log/:userID', function(req, res){
             }
             else if(Object.keys(req.query).length === 0){
                 //print everything
+                //https://stackoverflow.com/questions/27823478/findone-works-but-not-get-all-find
+                userRecordCollection.find({ 
+                    "userID": user   
+                }).toArray(function(err, docs) {
+                    if(err)
+                        console.log(err);
+                    res.json(docs);
+                  });
             }
             else{
-                console.log(req.query)
                 //validate date
                 if(isValidDate(fromDate) == false){
                     res.end("Incorrect 'from' date");
