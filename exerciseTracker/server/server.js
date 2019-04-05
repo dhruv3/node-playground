@@ -10,14 +10,14 @@ const mongoCient = require('mongodb').MongoClient;
 const url = "mongodb+srv://admin:admin@fcc-cluster-kuacf.mongodb.net/NewDBFCC?retryWrites=true";
 let userCollection = null;
 let userRecordCollection = null;
-mongoCient.connect(url, function(err, client){
+mongoCient.connect(url,  {useNewUrlParser: true}, function(err, client){
     if(err)
         throw err;
     const db = client.db('NewDBFCC');
     userCollection = db.collection('userExTrackerCollection');
-    userCollection.remove({});
+    userCollection.deleteMany({});
     userRecordCollection = db.collection('userRecordExTrackerCollection');
-    userRecordCollection.remove({});
+    userRecordCollection.deleteMany({});
 });
 
 const app = express()
@@ -35,7 +35,7 @@ app.post('/api/exercise/new-user', function(req,res){
     const newUserID = req.body.newUser;
     //need to use $set in order insert
     //https://stackoverflow.com/questions/13814539/mongodb-update-with-upserttrue-does-not-act-as-in-insert
-    userCollection.update(
+    userCollection.updateMany(
         { userID: newUserID },
         {"$set": {"userID": newUserID}},
         { upsert: true }
