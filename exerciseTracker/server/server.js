@@ -100,7 +100,7 @@ app.get('/api/exercise/log/:userID', function(req, res){
     const user = req.params.userID;
     const fromDate = req.query.from;
     const toDate = req.query.to;
-    const limit = req.query.limit; 
+    const limit = req.query.limit != undefined ? parseInt(req.query.limit) : true; 
     userCollection.findOne(
         {userID: user}
         ).then(function(data){
@@ -121,6 +121,9 @@ app.get('/api/exercise/log/:userID', function(req, res){
             }
             else{
                 //validate date
+                if(fromDate == undefined || toDate == undefined){
+                    res.end("Either mention both 'from' and 'to' date or remove both query params");
+                }
                 if(isValidDate(fromDate) == false){
                     res.end("Incorrect 'from' date");
                 }
@@ -130,18 +133,38 @@ app.get('/api/exercise/log/:userID', function(req, res){
                 if(new Date(fromDate) > new Date(toDate)){
                     res.end("'to' date should be higher than 'from' date")
                 }
-                if(typeof limit != "number" || limit <= 0){
+                //limit not mentioned so just print based on dates
+                if(limit === true){
+                    userRecordCollection.find({ 
+                        "userID": user, 
+                        "date" : { 
+                          $lt: toDate, 
+                          $gte: fromDate
+                        }   
+                    }).toArray(function(err, docs) {
+                        if(err)
+                            console.log(err);
+                        res.json(docs);
+                      });
+                }
+                //check limit is valid and then print
+                if(isNaN(limit) || limit <= 0){
                     res.end("Incorrect value of limit parameter");
                 }
-                userRecordCollection.find({ 
-                    "userID": user, 
-                    "date" : { 
-                      $lt: toDate, 
-                      $gte: fromDate
-                    }   
-                }).then(function(res){
-                    console.log(res);
-                })
+                else{
+                    userRecordCollection.find({ 
+                        "userID": user, 
+                        "date" : { 
+                          $lt: toDate, 
+                          $gte: fromDate
+                        }   
+                    }).limit(limit).toArray(function(err, docs) {
+                        if(err)
+                            console.log(err);
+                        res.json(docs);
+                      });
+                }
+                
             }
         })
 })
