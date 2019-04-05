@@ -11,12 +11,12 @@ var dns = require('dns');
 const mongoCient1 = require('mongodb').MongoClient;
 const url = "mongodb+srv://admin:admin@fcc-cluster-kuacf.mongodb.net/NewDBFCC?retryWrites=true";
 let collection = null;
-mongoCient1.connect(url, function(err, client){
+mongoCient1.connect(url, {useNewUrlParser: true}, function(err, client){
     if(err)
         throw err;
     const db = client.db('NewDBFCC');
     collection = db.collection('NewCollectionFCC');
-    collection.remove({});
+    collection.deleteMany({});
 });
 var counter = 0;
 var addRecordToCollection = function(url, res){
@@ -53,7 +53,6 @@ var app = express()
         //handles the http req that come in
         .use(function(req, res){
             const url = req.url;
-            console.log(url);
             if(url == '/'){
                 //https://stackoverflow.com/questions/14594121/express-res-sendfile-throwing-forbidden-error
                 res.render(path.resolve(__dirname + "/../client/index.ejs"));
