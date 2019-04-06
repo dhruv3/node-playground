@@ -17,7 +17,7 @@
         <div class="uploadContainer">
           <h3>Usage:</h3>
           <p>Please Upload a File...</p>
-          <form action="POST" action="/api/fileanalyze">
+          <form method="POST" enctype="multipart/form-data" action="/api/fileanalyze">
               <input type="file" name="upfile">
               <input type="submit" value="Upload">
           </form>
