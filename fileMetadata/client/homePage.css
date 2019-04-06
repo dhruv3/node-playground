@@ -12,10 +12,6 @@ body {
     margin-top: 40px;
 }
 
-h3 {
-    margin-top: 30px;
-}
-
 .footer {
     margin-top: 40px;
 }
@@ -58,4 +54,34 @@ h2{
 h3{
     color: orangered;
     font-size: 20px;
+}
+
+input{
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+input[type=submit]{
+    font-size: 16px;
+    border-radius: 3px;
+    background-color: #E4F1FE;
+    border: 1px solid grey;
+    box-shadow: 2px 2px #999;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+}
+
+.uploadContainer{
+    border: 5px dotted crimson;
+}
+
+.uploadContainer form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
