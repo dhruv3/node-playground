@@ -6,3 +6,17 @@
 * Node and Chrome are just creating their own modified version of JS.
 * Eg- Chrome runtime adds click event and DOM manipulation ability to JS.
 * Eg- Node runtime provides libs using which you can setup webservers and integrate with file system so that you can read and write from disk.
+
+# Section 3: Node.js Module System
+* The module system lets you load external libraries into your application. That’ll enable you to take advantage of built-in Node.js modules as well as third-party npm modules.
+* Importing `fs` module:
+  ```nodejs
+  const fs = require('fs');
+  ```
+* All of your files, which are referred as modules, have their own scope.
+* You can export stuff from your module as follows:  
+  ```nodejs
+  const name = 'Mike';
+  module.exports = name
+  ```
+* Also when you `require('./util.js')` it will get executed.
