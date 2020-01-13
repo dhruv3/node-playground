@@ -33,3 +33,9 @@
 const validator = require('validator')
 ```
 * Local dependency are those installed in your package.json. Other option is global package installation for packages lie nodemon. 
+# Section 4: File System and Command Line Args(Note Apps)
+## Getting inputs from User
+* `process.argv`: You get an array of arguments you entered in your command line.
+* Use a npm package **yargs** to parse argv you receive when you run node command.
+* `yargs.version("1.1.0")` this will set your app version number.
+* `yargs.command` it takes an object with keys: `command`, `describe`, `handler`
