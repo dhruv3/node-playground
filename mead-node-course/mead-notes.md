@@ -14,6 +14,9 @@
   ```nodejs
   const fs = require('fs');
   ```
+* fs function encountered: `fs.writeFileSync('fileName', data)` and `fs.readFileSync('fileName')`
+* In `writeFileSync` make sure you write a string as the data.
+* In `readFileSync` you get a buffer. Use `toString` to make human readable.
 ## Importing your own files
 * All of your files, which are referred as modules, have their own scope.
 * You can export stuff from your module as follows:  
@@ -38,4 +41,31 @@ const validator = require('validator')
 * `process.argv`: You get an array of arguments you entered in your command line.
 * Use a npm package **yargs** to parse argv you receive when you run node command.
 * `yargs.version("1.1.0")` this will set your app version number.
-* `yargs.command` it takes an object with keys: `command`, `describe`, `handler`
+* `yargs.command` it takes an object with keys: `command`, `describe`, `handler`, `builder`
+* Using `builder` we can create options for the command. Like flags which user needs to enter to get stuff running.
+```nodejs
+yargs.command({
+    command: "add",
+    describe: "Add a note",
+    builder:{
+        title:{
+            describe: "Note Title",
+            demandOption: true,
+            type: "string"
+        },
+        body:{
+            describe: "Note Body",
+            demandOption: true,
+            type: "string"
+        }
+    },
+    handler: function(argv){
+        console.log("Adding a new note")
+        console.log("Title: " + argv.title + "\tBody: " + argv.body);
+    }
+})
+```
+## Storing data with JSON
+* Keys have to be string in JSON.
+* `JSON.stringify(some object)` this will create a string of whatever JS object was present.
+* `JSON.parse(some string)` this will convert JSON obj to an object.
