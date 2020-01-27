@@ -69,3 +69,28 @@ yargs.command({
 * Keys have to be string in JSON.
 * `JSON.stringify(some object)` this will create a string of whatever JS object was present.
 * `JSON.parse(some string)` this will convert JSON obj to an object.
+
+## Arrow Function
+* Arrow functions don't create their own `this` binding but you use the context in which they are created.
+* ES6 method definition syntax:
+```js
+# OLD WAY
+const obj = {
+  foo: function() {
+    // ...
+  },
+  bar: function() {
+    // ...
+  }
+}
+
+# NEW WAY
+const obj = {
+  foo() {
+    // ...
+  },
+  bar() {
+    // ...
+  }
+}
+```
