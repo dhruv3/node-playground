@@ -98,3 +98,10 @@ const obj = {
 * Use `node inspect` to debug and break execution of your node program.
 * Go to `chrome://inspect` to see your app breakpoint. Click `inspect` next to see your app at the breakpoint.
 * Select this option: `Add folder to workspace` to get your files in the source.
+# Section 6: Async Node.js(Weather App)
+* `setTimeout` is not in JS or V8 enginer. NodeJS created the defintion for this. So when you call `setTimeout` it will be registered in Node APIs. Node will start the timer and then call the "callback" registered in `setTimeout`.
+* JS is a single-thread programming language. Node uses more than one thread to manage other functions. This is why NODE is non-blocking.
+* **Call Stack**: Where the functions get run.
+* **Callback Queue**: Where callbacks are placed. You need to move function from here to Call Stack in order to execute it.
+* So none of the async functions get run before your **main** function is DONE.
+* Use `npm init -y` to say yes to all the default questions in your package.json
