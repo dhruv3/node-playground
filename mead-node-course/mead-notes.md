@@ -94,3 +94,7 @@ const obj = {
   }
 }
 ```
+# Section 5: Debugging
+* Use `node inspect` to debug and break execution of your node program.
+* Go to `chrome://inspect` to see your app breakpoint. Click `inspect` next to see your app at the breakpoint.
+* Select this option: `Add folder to workspace` to get your files in the source.
