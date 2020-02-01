@@ -104,4 +104,22 @@ const obj = {
 * **Call Stack**: Where the functions get run.
 * **Callback Queue**: Where callbacks are placed. You need to move function from here to Call Stack in order to execute it.
 * So none of the async functions get run before your **main** function is DONE.
+* If your function is using callback pattern it is not necessary that it is a ASYNC in nature. Example: **foreach**, **filter** method.
 * Use `npm init -y` to say yes to all the default questions in your package.json
+* `request` package to make http requests.
+* To get a response in **json** format you need to make request as follows:
+```js
+request({url: mapBox, json: true}, (error, response) => {
+    const lat = response.body.features[0].center[0]
+    const long = response.body.features[0].center[1]
+    console.log(lat, long)
+})
+```
+* `mapbox` api to give you long and lat if you provide name of the location.
+* ES6 Property destructuring:
+```js
+request({url, json: true}, (error, {body}) => {
+        
+    })
+```
+* ES6 Object Destructuring: `{repsonse}` instead of `(data)` and then picking doing `data.response`
