@@ -98,6 +98,7 @@ const obj = {
 * Use `node inspect` to debug and break execution of your node program.
 * Go to `chrome://inspect` to see your app breakpoint. Click `inspect` next to see your app at the breakpoint.
 * Select this option: `Add folder to workspace` to get your files in the source.
+
 # Section 6: Async Node.js(Weather App)
 * `setTimeout` is not in JS or V8 enginer. NodeJS created the defintion for this. So when you call `setTimeout` it will be registered in Node APIs. Node will start the timer and then call the "callback" registered in `setTimeout`.
 * JS is a single-thread programming language. Node uses more than one thread to manage other functions. This is why NODE is non-blocking.
@@ -123,3 +124,25 @@ request({url, json: true}, (error, {body}) => {
     })
 ```
 * ES6 Object Destructuring: `{repsonse}` instead of `(data)` and then picking doing `data.response`
+
+# Section 7: Web Servers
+* You can use `send` to serve JSON and HTML as response.
+```js
+res.send("<h1>Header</h1>");
+
+res.send({
+name: "JAHN",
+champ: 16
+});
+```
+* Node in-built variables: `__dirname` and `filename`.
+* Use core node modules `path` to manipulate file paths.
+```js
+const path = require('path')
+path.join(__dirname, "../public")
+```
+* To serve all the content of a directory:
+```js
+app.use(express.static(myPath))
+```
+* `index.html` works as your root path in Express.
