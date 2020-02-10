@@ -85,3 +85,6 @@ typings/
 
 #pdf
 *.pdf
+
+forecast.js
+geocode.js
