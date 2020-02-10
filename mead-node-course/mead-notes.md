@@ -146,3 +146,17 @@ path.join(__dirname, "../public")
 app.use(express.static(myPath))
 ```
 * `index.html` works as your root path in Express.
+## Using Template Engine to render Dynamic WebPages
+* `Handlebars` is used for Dynamic WebPages and creating reusable markups.
+* Use npm package **hbs** to setup Handlebars that is wrapped with Express.
+```js
+app.set('view engine', 'hbs')
+```
+* This tells Express we are using hbs as our templating engine.
+* Handlebars wants a folder called `views` in your project dir.
+```js
+app.get('', (req, res) => {
+    res.render('index');
+})
+```
+* So calling `render` makes Node go get the view from `views` folder
