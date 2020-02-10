@@ -160,3 +160,21 @@ app.get('', (req, res) => {
 })
 ```
 * So calling `render` makes Node go get the view from `views` folder
+```js
+app.set('views', myNewPath)
+```
+* Make a new folder instead of `views` to store your templates in.
+```js
+hbs.registerPartials(partialsPath)
+```
+* Register path to partials in handlebars.
+```bash
+nodemon src/app.js -e js,hbs
+```
+* Make nodemon monitor files with js and hbs extension.
+## 404 Page
+```js
+app.get('*', (req, res) => {
+    res.send('This is 404!');
+})
+```
