@@ -178,3 +178,6 @@ app.get('*', (req, res) => {
     res.send('This is 404!');
 })
 ```
+# Section 8: Accessing API from Browser
+* `req.query.search`: This will give us the query terms we have in the request.
+* 
