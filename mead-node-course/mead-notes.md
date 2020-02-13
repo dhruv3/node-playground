@@ -180,4 +180,5 @@ app.get('*', (req, res) => {
 ```
 # Section 8: Accessing API from Browser
 * `req.query.search`: This will give us the query terms we have in the request.
-* 
+* Aim is to create a form on client side and JSON response endpoint at backend.
+* User will submit his query on frontend and it will received by Express server in backend. Backend will send appropriate response back to the client.
